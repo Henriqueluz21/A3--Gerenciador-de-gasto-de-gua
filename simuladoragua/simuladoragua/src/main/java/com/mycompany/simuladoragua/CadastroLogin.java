@@ -1,5 +1,11 @@
 package com.mycompany.simuladoragua;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Random;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -16,6 +22,7 @@ public class CadastroLogin extends javax.swing.JFrame {
      */
     public CadastroLogin() {
         initComponents();
+                
     }
 
     /**
@@ -37,7 +44,7 @@ public class CadastroLogin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jTextField1.setForeground(new java.awt.Color(102, 102, 102));
-        jTextField1.setText("Login");
+        jTextField1.setText("Email");
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
@@ -133,8 +140,44 @@ public class CadastroLogin extends javax.swing.JFrame {
 
     private void CadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CadastroActionPerformed
         //Para salvar os dados no banco de dados (MySQL)
-        javax.swing.JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso!");
+        String nome = jTextField3.getText();
+        String email = jTextField1.getText();  
+        String senha = jTextField2.getText();
         
+        Random rand = new Random();
+        int idAleatorio = rand.nextInt(99000) + 1000;
+        
+        try {
+        // Conectar ao banco de dados
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conexao = DriverManager.getConnection(
+                "jdbc:mysql://localhost/gerenciadorAgua", "root", "Penelope_11");
+
+            // Criar comando SQL com PreparedStatement para evitar SQL Injection
+            String sql = "INSERT INTO usuario (id,nome, email, senha) VALUES (?, ?, ?, ?)";
+            java.sql.PreparedStatement stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1, idAleatorio);
+            stmt.setString(2, nome);
+            stmt.setString(3, email);
+            stmt.setString(4, senha);
+
+            // Executa o insert
+            stmt.executeUpdate();
+
+            // Mensagem de sucesso
+            javax.swing.JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso!");
+
+            // Fecha a tela atual e volta pra tela de login
+
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Driver do banco de dados não localizado");
+        } catch (SQLException ex) {
+            System.out.println("Erro ao acessar o banco: " + ex.getMessage());
+            javax.swing.JOptionPane.showMessageDialog(this, "Erro ao cadastrar: " + ex.getMessage());
+        }
+        
+        
+        javax.swing.JOptionPane.showMessageDialog(this, "Cadastro realizado com sucesso!");
         // Voltar para tela de login
         new logintela().setVisible(true); 
         // Fechar a tela de cadastro

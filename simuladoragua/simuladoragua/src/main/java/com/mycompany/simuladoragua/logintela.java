@@ -1,4 +1,11 @@
 package com.mycompany.simuladoragua;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /*
@@ -22,6 +29,7 @@ public class logintela extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(0, 242, 242));
 
         loginTextField.setText("LoginTextField");
         loginTextField.setBorder(javax.swing.BorderFactory.createTitledBorder("Digite seu login"));
@@ -101,15 +109,35 @@ public class logintela extends javax.swing.JFrame {
     //IDENTIFICAR LOGIN E SENHA NA TELA LOGIN
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String login = loginTextField.getText(); // login
-        String senha = new String(senhaPasswordField.getPassword()); // senha
+        String senha = new String(senhaPasswordField.getPassword());// senha
         
-        if (login.equals("admin") && senha.equals("admin")) {
-            //Se estiver certo, mensagem de sucesso
-            JOptionPane.showMessageDialog(null, "Login realizado com sucesso!");
-        } else {
-            //Se estiver errado, mensagem de erro
-            JOptionPane.showMessageDialog(null, "Login ou senha inválidos!");
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost/gerenciadorAgua", "root", "Penelope_11");
+
+            String sql = "SELECT * FROM usuario WHERE nome = ? AND senha = ?";
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            stmt.setString(1, login);
+            stmt.setString(2, senha);
+
+             ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                JOptionPane.showMessageDialog(null, "Login realizado com sucesso!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Login ou senha inválidos!");
+            }
+
+            rs.close();
+            stmt.close();
+            conexao.close();
+
+        } catch (ClassNotFoundException ex) {
+            JOptionPane.showMessageDialog(null, "Driver do banco de dados não localizado.");
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao acessar o banco: " + ex.getMessage());
         }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
