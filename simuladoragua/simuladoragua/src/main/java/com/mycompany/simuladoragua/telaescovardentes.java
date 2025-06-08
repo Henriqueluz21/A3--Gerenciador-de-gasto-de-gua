@@ -3,17 +3,17 @@ package com.mycompany.simuladoragua;
 import javax.swing.*;
 import java.awt.*;
 
-public class telabanho extends JFrame {
+public class telaescovardentes extends JFrame {
 
-    public telabanho() {
-        setTitle("AquaLerta - Banho");
+    public telaescovardentes() {
+        setTitle("AquaLerta - Escovar os Dentes");
         setSize(900, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // BOTAO FORA MENULATERAL
-        JButton btnToggleMenu = new JButton("MENU");
+        // BOTAO FORA MENU LATERAL
+        JButton btnToggleMenu = new JButton("---");
         btnToggleMenu.setFocusPainted(false);
         btnToggleMenu.setBackground(new Color(125, 181, 180));
         btnToggleMenu.setForeground(Color.WHITE);
@@ -21,10 +21,7 @@ public class telabanho extends JFrame {
         btnToggleMenu.setMaximumSize(new Dimension(50, 40));
         btnToggleMenu.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        // MENU LATERAL ---------------------------------------------------
-        JPanel painelMenu = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        painelMenu.setBackground(Color.WHITE);
-
+        // MENU LATERAL
         JPanel menuLateral = new JPanel();
         menuLateral.setLayout(new BoxLayout(menuLateral, BoxLayout.Y_AXIS));
         menuLateral.setBackground(new Color(125, 181, 180));
@@ -102,27 +99,27 @@ public class telabanho extends JFrame {
         painelCentral.add(Box.createVerticalStrut(10));
         painelCentral.add(painelContador);
 
-        // Texto para informar onde registrar o dado e unidade de medida
+        // Texto para informar onde registrar e unidade de medida
         JLabel consumoLabel = new JLabel("consumo em minutos:");
         consumoLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         consumoLabel.setForeground(Color.GRAY);
         consumoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         painelCentral.add(consumoLabel);
 
-        // Botão de registro
+        // Botão registro
         JPanel panelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelBotoes.setBackground(Color.WHITE);
         panelBotoes.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
 
-        JButton btnBanho = new JButton("Registrar Banho");
-        btnBanho.setPreferredSize(new Dimension(200, 50));
-        btnBanho.setBackground(new Color(125, 181, 180));
-        btnBanho.setForeground(Color.WHITE);
-        btnBanho.setFont(new Font("Arial", Font.BOLD, 14));
-        btnBanho.setFocusPainted(false);
-        btnBanho.addActionListener(e -> JOptionPane.showMessageDialog(this, "Banho registrado com sucesso!"));
+        JButton btnRegistrar = new JButton("Registrar escovação");
+        btnRegistrar.setPreferredSize(new Dimension(250, 50));
+        btnRegistrar.setBackground(new Color(125, 181, 180));
+        btnRegistrar.setForeground(Color.WHITE);
+        btnRegistrar.setFont(new Font("Arial", Font.BOLD, 14));
+        btnRegistrar.setFocusPainted(false);
+        btnRegistrar.addActionListener(e -> JOptionPane.showMessageDialog(this, "Escovação registrada com sucesso!"));
 
-        panelBotoes.add(btnBanho);
+        panelBotoes.add(btnRegistrar);
         painelCentral.add(panelBotoes);
 
         // Adiciona os painéis principais
@@ -133,6 +130,6 @@ public class telabanho extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(telabanho::new);
+        SwingUtilities.invokeLater(telaescovardentes::new);
     }
 }
