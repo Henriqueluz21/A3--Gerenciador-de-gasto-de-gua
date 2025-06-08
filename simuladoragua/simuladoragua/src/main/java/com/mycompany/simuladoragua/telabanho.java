@@ -40,7 +40,7 @@ public class telabanho extends JFrame {
         menuLateral.add(Box.createRigidArea(new Dimension(0, 10)));
         menuLateral.add(btnToggleMenu);
 
-        String[] opcoesMenu = {"Histórico de Gastos", "Gastos", "Gráfico de Uso", "Dicas", "Perfil"};
+        String[] opcoesMenu = {"Histórico de Gastos", "Gastos", "Dicas", "Perfil"};
         for (String opcao : opcoesMenu) {
             JButton btn = new JButton(opcao);
             btn.setMaximumSize(new Dimension(180, 40));

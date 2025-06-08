@@ -49,7 +49,7 @@ public class telainicio extends JFrame {
         menuLateral.add(btnToggleMenu);
         
         // Botões do menu lateral
-        String[] opcoesMenu = {"Histórico de Gastos", "Gastos", "Gráfico de Uso", "Dicas", "Perfil"};
+        String[] opcoesMenu = {"Histórico de Gastos", "Gastos", "Dicas", "Perfil"};
         for (String opcao : opcoesMenu) {
             JButton btn = new JButton(opcao);
             btn.setMaximumSize(new Dimension(180, 40));
