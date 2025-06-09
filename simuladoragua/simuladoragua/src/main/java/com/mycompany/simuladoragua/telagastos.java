@@ -14,7 +14,7 @@ public class telagastos extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // BOTÃO DE MENU
+       // BOTÃO DE MENU
         JButton btnToggleMenu = new JButton("---");
         btnToggleMenu.setFocusPainted(false);
         btnToggleMenu.setBackground(new Color(125,181,180));
@@ -29,16 +29,19 @@ public class telagastos extends JFrame {
         menuLateral.setBackground(new Color(125, 181, 180));
         menuLateral.setPreferredSize(new Dimension(200, getHeight()));
 
+        // Ação do botão menu (abre/fecha o menu)
         btnToggleMenu.addActionListener(e -> {
             menuLateral.setVisible(!menuLateral.isVisible());
             this.revalidate();
             this.repaint();
         });
 
+        // Adiciona botão menu ao painel
         menuLateral.add(Box.createRigidArea(new Dimension(0,10)));
         menuLateral.add(btnToggleMenu);
 
-        String[] opcoesMenu = {"Histórico de Gastos", "Gastos", "Dicas", "Perfil"};
+        // Botões do menu lateral com ações
+        String[] opcoesMenu = {"Dicas", "Perfil", "Início"};
         for (String opcao : opcoesMenu) {
             JButton btn = new JButton(opcao);
             btn.setMaximumSize(new Dimension(180, 40));
@@ -50,8 +53,28 @@ public class telagastos extends JFrame {
             btn.setBorderPainted(false);
             menuLateral.add(Box.createRigidArea(new Dimension(0, 15)));
             menuLateral.add(btn);
+
+            // Ações específicas de cada botão
+            btn.addActionListener(e -> {
+                switch (opcao) {
+                    case "Dicas":
+                        JOptionPane.showMessageDialog(this, "Abrir Dicas");
+                        //new teladicas().setVisible(true);
+                        dispose();
+                        break;
+                    case "Perfil":
+                        new telaperfil("Usuário Exemplo", "email@exemplo.com", 123.45).setVisible(true);
+                        dispose();
+                        break;
+                    case "Início":
+                        new telainicio().setVisible(true);
+                        dispose();
+                        break;
+                }
+            });
         }
 
+        
         // PAINEL CENTRAL
         JPanel painelCentral = new JPanel(new BorderLayout());
         painelCentral.setBackground(Color.WHITE);

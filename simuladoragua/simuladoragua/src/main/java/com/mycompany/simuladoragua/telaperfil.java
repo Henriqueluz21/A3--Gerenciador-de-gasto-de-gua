@@ -40,21 +40,36 @@ public class telaperfil extends JFrame {
         menuLateral.add(btnToggleMenu);
 
         // Botões do menu lateral
-        String[] opcoesMenu = {"Histórico de Gastos", "Gastos", "Dicas", "Início"};
-        for (String opcao : opcoesMenu) {
-            JButton btn = new JButton(opcao);
-            btn.setMaximumSize(new Dimension(180, 40));
-            btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-            btn.setBackground(new Color(125, 181, 180));
-            btn.setForeground(Color.WHITE);
-            btn.setFont(new Font("Arial", Font.BOLD, 14));
-            btn.setFocusPainted(false);
-            btn.setBorderPainted(false);
+String[] opcoesMenu = {"Gastos", "Dicas", "Início"};
+for (String opcao : opcoesMenu) {
+    JButton btn = new JButton(opcao);
+    btn.setMaximumSize(new Dimension(180, 40));
+    btn.setAlignmentX(Component.CENTER_ALIGNMENT);
+    btn.setBackground(new Color(125, 181, 180));
+    btn.setForeground(Color.WHITE);
+    btn.setFont(new Font("Arial", Font.BOLD, 14));
+    btn.setFocusPainted(false);
+    btn.setBorderPainted(false);
 
-
-            menuLateral.add(Box.createRigidArea(new Dimension(0, 15)));
-            menuLateral.add(btn);
+    // ActionListener - é a ação que cada botão vai executar
+    btn.addActionListener(e -> {
+        switch (opcao) {
+            case "Gastos":
+                dispose();
+                break;
+            case "Dicas":
+                dispose();
+                break;
+            case "Início":
+                new telainicio().setVisible(true);
+                dispose();
+                break;
         }
+    });
+
+    menuLateral.add(Box.createRigidArea(new Dimension(0, 15)));
+    menuLateral.add(btn);
+}
 
         // PAINEL CENTRAL
         JPanel painelCentral = new JPanel();

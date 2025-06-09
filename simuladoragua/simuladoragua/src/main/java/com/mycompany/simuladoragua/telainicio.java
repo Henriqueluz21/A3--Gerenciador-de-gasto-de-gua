@@ -22,20 +22,25 @@ public class telainicio extends JFrame {
         btnToggleMenu.setMaximumSize(new Dimension(50,40));
         btnToggleMenu.setAlignmentX(Component.LEFT_ALIGNMENT); 
         
-        // MENU LATERAL ---------------------------------------------------
-        
-         JPanel painelMenu = new JPanel(new FlowLayout(FlowLayout.LEFT));
-         painelMenu.setBackground(Color.WHITE);
-              
+       // MENU LATERAL ---------------------------------------------------
+
+        JPanel painelMenu = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        painelMenu.setBackground(Color.WHITE);
+
         JPanel menuLateral = new JPanel();
         menuLateral.setLayout(new BoxLayout(menuLateral, BoxLayout.Y_AXIS)); // azul claro
         menuLateral.setBackground(new Color(125, 181, 180));
         menuLateral.setPreferredSize(new Dimension(200, getHeight()));
-        
-       
-        
-        
-        //ACAO BOTAO
+
+        // BOTÃO MENU SUPERIOR (---)
+        btnToggleMenu.setFocusPainted(false);
+        btnToggleMenu.setBackground(new Color(125, 181, 180));
+        btnToggleMenu.setForeground(Color.WHITE);
+        btnToggleMenu.setFont(new Font("Arial", Font.BOLD, 18));
+        btnToggleMenu.setMaximumSize(new Dimension(50, 40));
+        btnToggleMenu.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        // AÇÃO BOTÃO MENU
         btnToggleMenu.addActionListener(e -> {
             boolean visivel = menuLateral.isVisible();
             menuLateral.setVisible(!visivel);
@@ -43,26 +48,50 @@ public class telainicio extends JFrame {
             this.repaint();
             
         });
-        
-        //ADICIONAR BOTAO AO MENU
-        menuLateral.add(Box.createRigidArea(new Dimension(0,10)));
-        menuLateral.add(btnToggleMenu);
-        
-        // Botões do menu lateral
-        String[] opcoesMenu = {"Histórico de Gastos", "Gastos", "Dicas", "Perfil"};
-        for (String opcao : opcoesMenu) {
-            JButton btn = new JButton(opcao);
-            btn.setMaximumSize(new Dimension(180, 40));
-            btn.setAlignmentX(Component.CENTER_ALIGNMENT);
-            btn.setBackground(new Color(125, 181, 180));
-            btn.setForeground(Color.WHITE);
-            btn.setFont(new Font("Arial", Font.BOLD, 14)); //negrito e tamanho da letra
-            btn.setFocusPainted(false);
-            btn.setBorderPainted(false);
-            menuLateral.add(Box.createRigidArea(new Dimension(0, 15))); // espaçamento
-            menuLateral.add(btn);
-        }
 
+        // ADICIONAR BOTÃO AO MENU
+        menuLateral.add(Box.createRigidArea(new Dimension(0, 10)));
+        menuLateral.add(btnToggleMenu);
+
+// BOTÕES DO MENU LATERAL
+String[] opcoesMenu = {"Gastos", "Dicas", "Perfil"};
+for (String opcao : opcoesMenu) {
+    JButton btn = new JButton(opcao);
+    btn.setMaximumSize(new Dimension(180, 40));
+    btn.setAlignmentX(Component.CENTER_ALIGNMENT);
+    btn.setBackground(new Color(125, 181, 180));
+    btn.setForeground(Color.WHITE);
+    btn.setFont(new Font("Arial", Font.BOLD, 14)); // negrito e tamanho da letra
+    btn.setFocusPainted(false);
+    btn.setBorderPainted(false);
+
+    // AÇÃO DOS BOTÕES MENU
+    String finalOpcao = opcao;
+    btn.addActionListener(e -> {
+        switch (finalOpcao) {
+            case "Gastos":
+                new telagastos().setVisible(true);
+                dispose();
+                break;
+            case "Dicas":
+                JOptionPane.showMessageDialog(this, "Abrir tela de Dicas");
+                //new teladicas().setVisible(true);
+                dispose();
+                break;
+            case "Perfil":
+                new telaperfil("Usuário Exemplo", "email@exemplo.com", 123.45).setVisible(true);
+                dispose();
+                break;
+        }
+    });
+
+    menuLateral.add(Box.createRigidArea(new Dimension(0, 15))); // espaçamento
+    menuLateral.add(btn);
+}
+
+        
+ 
+        
         // PAINEL CENTRAL
         JPanel painelCentral = new JPanel(new BorderLayout());
         painelCentral.setBackground(Color.WHITE);
@@ -101,19 +130,42 @@ public class telainicio extends JFrame {
         String[] atividades = {"Banho", "Lavar Louça", "Escovar os Dentes", "Lavar Roupa", "Descargas", "Regar Plantas", "Lavar Quintal", "Outros"};
 
         for (String atividade : atividades) {
-            
+
             JButton botao = new JButton(atividade);
-            botao.setPreferredSize(new Dimension(0,65));
-            botao.setBackground(new Color(125, 181, 180)); // azul bem clarinho
-            botao.setForeground(Color.WHITE); //Letra do texto branca
-            botao.setFont(new Font("Arial", Font.BOLD, 14)); //negrito e tamanho da letra
+            botao.setPreferredSize(new Dimension(0, 65));
+            botao.setBackground(new Color(125, 181, 180));
+            botao.setForeground(Color.WHITE);
+            botao.setFont(new Font("Arial", Font.BOLD, 14));
             botao.setFocusPainted(false);
-            botao.addActionListener(e -> JOptionPane.showMessageDialog(this, "Selecionado: " + atividade));
-            panelBotoes.add(botao);
-        }
 
-        painelCentral.add(panelBotoes, BorderLayout.SOUTH);
+            botao.addActionListener(e -> {
+                switch (atividade) {
+                    case "Banho":
+                        new telabanho().setVisible(true);
+                        this.dispose();
+                        break;
+                    case "Lavar Louça":
+                        new telalavarlouca().setVisible(true);
+                        this.dispose();
+                        break;
+                    case "Escovar os Dentes":
+                        new telaescovardentes().setVisible(true);
+                        break;
 
+                    // outros casos botões
+                    default:
+                        JOptionPane.showMessageDialog(this, "Atividade selecionada: " + atividade);
+                        break;
+                }
+            });
+
+    panelBotoes.add(botao);
+}
+
+painelCentral.add(panelBotoes, BorderLayout.SOUTH);
+
+        
+        
         // Adiciona menu lateral e painel central na janela
         add(menuLateral, BorderLayout.WEST);
         add(painelCentral, BorderLayout.CENTER);

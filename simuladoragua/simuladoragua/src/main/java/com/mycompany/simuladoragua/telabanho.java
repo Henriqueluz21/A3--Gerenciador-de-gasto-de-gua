@@ -12,8 +12,8 @@ public class telabanho extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // BOTAO FORA MENULATERAL
-        JButton btnToggleMenu = new JButton("MENU");
+        // BOTAO FORA MENU LATERAL (toggle)
+        JButton btnToggleMenu = new JButton("---");
         btnToggleMenu.setFocusPainted(false);
         btnToggleMenu.setBackground(new Color(125, 181, 180));
         btnToggleMenu.setForeground(Color.WHITE);
@@ -40,7 +40,8 @@ public class telabanho extends JFrame {
         menuLateral.add(Box.createRigidArea(new Dimension(0, 10)));
         menuLateral.add(btnToggleMenu);
 
-        String[] opcoesMenu = {"Histórico de Gastos", "Gastos", "Dicas", "Perfil"};
+        // Menu completo igual às outras telas, incluindo "Histórico de Gastos" e "Início"
+        String[] opcoesMenu = {"Início","Gastos", "Dicas", "Perfil"};
         for (String opcao : opcoesMenu) {
             JButton btn = new JButton(opcao);
             btn.setMaximumSize(new Dimension(180, 40));
@@ -50,6 +51,30 @@ public class telabanho extends JFrame {
             btn.setFont(new Font("Arial", Font.BOLD, 14));
             btn.setFocusPainted(false);
             btn.setBorderPainted(false);
+
+            // Ações dos botões do menu
+            btn.addActionListener(e -> {
+                switch (opcao) {
+                    case "Início":
+                        new telainicio().setVisible(true);
+                        this.dispose();
+                        break;
+                    case "Gastos":
+                        new telagastos().setVisible(true);
+                        this.dispose();
+                        break;
+                    case "Dicas":
+                        JOptionPane.showMessageDialog(this, "Abrir tela de Dicas (não implementado)");
+                        // ex: new teladicas().setVisible(true);
+                        this.dispose();
+                        break;
+                    case "Perfil":
+                        new telaperfil("Usuário Exemplo", "email@exemplo.com", 123.45).setVisible(true);
+                        this.dispose();
+                        break;
+                }
+            });
+
             menuLateral.add(Box.createRigidArea(new Dimension(0, 15)));
             menuLateral.add(btn);
         }
@@ -102,7 +127,7 @@ public class telabanho extends JFrame {
         painelCentral.add(Box.createVerticalStrut(10));
         painelCentral.add(painelContador);
 
-        // Texto para informar onde registrar o dado e unidade de medida
+        // Texto para informar o dado e unidade de medida
         JLabel consumoLabel = new JLabel("consumo em minutos:");
         consumoLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         consumoLabel.setForeground(Color.GRAY);

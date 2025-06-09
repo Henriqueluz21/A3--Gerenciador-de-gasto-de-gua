@@ -12,7 +12,7 @@ public class telaescovardentes extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 
-        // BOTAO FORA MENU LATERAL
+        // BOTAO FORA MENU LATERAL (toggle)
         JButton btnToggleMenu = new JButton("---");
         btnToggleMenu.setFocusPainted(false);
         btnToggleMenu.setBackground(new Color(125, 181, 180));
@@ -37,7 +37,8 @@ public class telaescovardentes extends JFrame {
         menuLateral.add(Box.createRigidArea(new Dimension(0, 10)));
         menuLateral.add(btnToggleMenu);
 
-        String[] opcoesMenu = {"Histórico de Gastos", "Gastos", "Dicas", "Perfil"};
+        // Opções do menu lateral (igual ao telainicio)
+        String[] opcoesMenu = {"Início", "Gastos", "Dicas", "Perfil"};
         for (String opcao : opcoesMenu) {
             JButton btn = new JButton(opcao);
             btn.setMaximumSize(new Dimension(180, 40));
@@ -47,6 +48,31 @@ public class telaescovardentes extends JFrame {
             btn.setFont(new Font("Arial", Font.BOLD, 14));
             btn.setFocusPainted(false);
             btn.setBorderPainted(false);
+
+            // Ações dos botões do menu
+            String finalOpcao = opcao;
+            btn.addActionListener(e -> {
+                switch (finalOpcao) {
+                    case "Gastos":
+                        new telagastos().setVisible(true);
+                        this.dispose();
+                        break;
+                    case "Dicas":
+                        JOptionPane.showMessageDialog(this, "Abrir tela de Dicas (não implementado)");
+                        // ex: new teladicas().setVisible(true);
+                        this.dispose();
+                        break;
+                    case "Perfil":
+                        new telaperfil("Usuário Exemplo", "email@exemplo.com", 123.45).setVisible(true);
+                        this.dispose();
+                        break;
+                    case "Início":
+                        new telainicio().setVisible(true);
+                        this.dispose();
+                        break;
+                }
+            });
+
             menuLateral.add(Box.createRigidArea(new Dimension(0, 15)));
             menuLateral.add(btn);
         }
