@@ -5,7 +5,11 @@ import java.awt.*;
 
 public class telaperfil extends JFrame {
 
-    public telaperfil(String nomeUsuario, String emailUsuario, double consumoAguaTotal) {
+    private int usuarioId;
+    
+    public telaperfil(String nomeUsuario, String emailUsuario, double consumoAguaTotal, int usuarioId) {
+        
+        this.usuarioId = usuarioId;
         setTitle("AquaLerta - Perfil");
         setSize(900, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -61,7 +65,7 @@ for (String opcao : opcoesMenu) {
                 dispose();
                 break;
             case "Início":
-                new telainicio().setVisible(true);
+                new telainicio(usuarioId).setVisible(true);
                 dispose();
                 break;
         }
@@ -123,6 +127,6 @@ for (String opcao : opcoesMenu) {
 
     // Para testar a tela
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new telaperfil("shadow", "shadow@gmail.com", 235.6));
+        
     }
 }

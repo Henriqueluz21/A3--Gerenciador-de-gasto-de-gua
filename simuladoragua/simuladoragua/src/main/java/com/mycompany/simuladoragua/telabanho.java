@@ -2,16 +2,32 @@ package com.mycompany.simuladoragua;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Random;
 
 public class telabanho extends JFrame {
+    private int contador = 0;
+    public int consumoMin = 0;
+    
+    private int usuarioId;
 
+    public telabanho(int usuarioId) {
+        this.usuarioId = usuarioId;
+    
+    }
+
+    
     public telabanho() {
+        
         setTitle("AquaLerta - Banho");
         setSize(900, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
-
+        
+        
         // BOTAO FORA MENU LATERAL (toggle)
         JButton btnToggleMenu = new JButton("---");
         btnToggleMenu.setFocusPainted(false);
@@ -56,11 +72,11 @@ public class telabanho extends JFrame {
             btn.addActionListener(e -> {
                 switch (opcao) {
                     case "Início":
-                        new telainicio().setVisible(true);
+                        new telainicio(usuarioId).setVisible(true);
                         this.dispose();
                         break;
                     case "Gastos":
-                        new telagastos().setVisible(true);
+                        new telagastos(usuarioId).setVisible(true);
                         this.dispose();
                         break;
                     case "Dicas":
@@ -69,7 +85,7 @@ public class telabanho extends JFrame {
                         this.dispose();
                         break;
                     case "Perfil":
-                        new telaperfil("Usuário Exemplo", "email@exemplo.com", 123.45).setVisible(true);
+                        new telaperfil("Usuário Exemplo", "email@exemplo.com", 123.45, usuarioId).setVisible(true);
                         this.dispose();
                         break;
                 }
@@ -108,6 +124,8 @@ public class telabanho extends JFrame {
         JButton btnMais = new JButton("+");
         btnMais.setPreferredSize(new Dimension(50, 50));
         btnMais.setFont(new Font("Arial", Font.BOLD, 24));
+        
+        
 
         JLabel contadorLabel = new JLabel("0", SwingConstants.CENTER);
         contadorLabel.setPreferredSize(new Dimension(60, 60));
@@ -124,29 +142,72 @@ public class telabanho extends JFrame {
         painelContador.add(contadorLabel);
         painelContador.add(btnMenos);
 
+        btnMais.addActionListener(e -> {
+            contador++;
+            contadorLabel.setText(String.valueOf(contador));
+        });
+        
+        btnMenos.addActionListener(e -> {
+            if (contador > 0) contador--; 
+            contadorLabel.setText(String.valueOf(contador));
+        });
+        
+        
         painelCentral.add(Box.createVerticalStrut(10));
         painelCentral.add(painelContador);
-
+        
+        JButton btnBanho = new JButton("Registrar Banho");
+        
         // Texto para informar o dado e unidade de medida
-        JLabel consumoLabel = new JLabel("consumo em minutos:");
+        JLabel consumoLabel = new JLabel("consumo em minutos:" + consumoMin + "L" );
         consumoLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         consumoLabel.setForeground(Color.GRAY);
         consumoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         painelCentral.add(consumoLabel);
+        
+        btnBanho.addActionListener(e -> {
+            consumoMin = contador * 12;
+            consumoLabel.setText("consumo em minutos: " + consumoMin + "L");
+            Random rand = new Random();
+            int idAleatorio = rand.nextInt(99000) + 1000;
 
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost/gerenciadorAgua", "root", "Penelope_11");
+
+                String sql = "INSERT INTO consumoChuveiro (Id, banhoDia, tempoGasto, UsuarioId) VALUES (?, ?, ?, ?)";
+                java.sql.PreparedStatement stmt = conexao.prepareStatement(sql);
+
+                stmt.setInt(1, idAleatorio);               
+                stmt.setInt(2, consumoMin);               
+                stmt.setInt(3, contador);                 
+                stmt.setInt(4, usuarioId);                        
+                
+
+                stmt.executeUpdate();
+                JOptionPane.showMessageDialog(this, "Consumo registrado com sucesso!");
+
+                conexao.close();
+            } catch (Exception ex) {
+                 ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Erro ao registrar banho: " + ex.getMessage());
+            }
+});
+
+        
         // Botão de registro
         JPanel panelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER));
         panelBotoes.setBackground(Color.WHITE);
         panelBotoes.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
 
-        JButton btnBanho = new JButton("Registrar Banho");
+        
         btnBanho.setPreferredSize(new Dimension(200, 50));
         btnBanho.setBackground(new Color(125, 181, 180));
         btnBanho.setForeground(Color.WHITE);
         btnBanho.setFont(new Font("Arial", Font.BOLD, 14));
         btnBanho.setFocusPainted(false);
-        btnBanho.addActionListener(e -> JOptionPane.showMessageDialog(this, "Banho registrado com sucesso!"));
 
+        
         panelBotoes.add(btnBanho);
         painelCentral.add(panelBotoes);
 
@@ -156,7 +217,9 @@ public class telabanho extends JFrame {
 
         setVisible(true);
     }
-
+    
+   
+ 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(telabanho::new);
     }

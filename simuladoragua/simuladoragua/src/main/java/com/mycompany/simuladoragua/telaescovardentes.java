@@ -5,7 +5,12 @@ import java.awt.*;
 
 public class telaescovardentes extends JFrame {
 
-    public telaescovardentes() {
+    private int usuarioId;
+    
+    public telaescovardentes(int usuarioId) {
+        
+        this.usuarioId = usuarioId;
+        
         setTitle("AquaLerta - Escovar os Dentes");
         setSize(900, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -54,7 +59,7 @@ public class telaescovardentes extends JFrame {
             btn.addActionListener(e -> {
                 switch (finalOpcao) {
                     case "Gastos":
-                        new telagastos().setVisible(true);
+                        new telagastos(usuarioId).setVisible(true);
                         this.dispose();
                         break;
                     case "Dicas":
@@ -63,11 +68,11 @@ public class telaescovardentes extends JFrame {
                         this.dispose();
                         break;
                     case "Perfil":
-                        new telaperfil("Usuário Exemplo", "email@exemplo.com", 123.45).setVisible(true);
+                        new telaperfil("Usuário Exemplo", "email@exemplo.com", 123.45, usuarioId).setVisible(true);
                         this.dispose();
                         break;
                     case "Início":
-                        new telainicio().setVisible(true);
+                        new telainicio(usuarioId).setVisible(true);
                         this.dispose();
                         break;
                 }
@@ -156,6 +161,6 @@ public class telaescovardentes extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(telaescovardentes::new);
+        
     }
 }

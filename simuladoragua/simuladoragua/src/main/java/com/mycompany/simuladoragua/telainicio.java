@@ -6,7 +6,13 @@ import java.awt.Dimension;
 
 public class telainicio extends JFrame {
 
-    public telainicio() {
+    private int usuarioId;
+    
+
+    public telainicio(int usuarioId) {
+
+        this.usuarioId = usuarioId;
+        
         setTitle("AquaLerta - Início");
         setSize(900, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,7 +76,7 @@ for (String opcao : opcoesMenu) {
     btn.addActionListener(e -> {
         switch (finalOpcao) {
             case "Gastos":
-                new telagastos().setVisible(true);
+                new telagastos(usuarioId).setVisible(true);
                 dispose();
                 break;
             case "Dicas":
@@ -79,7 +85,7 @@ for (String opcao : opcoesMenu) {
                 dispose();
                 break;
             case "Perfil":
-                new telaperfil("Usuário Exemplo", "email@exemplo.com", 123.45).setVisible(true);
+                new telaperfil("Usuário Exemplo", "email@exemplo.com", 123.45, usuarioId).setVisible(true);
                 dispose();
                 break;
         }
@@ -141,15 +147,15 @@ for (String opcao : opcoesMenu) {
             botao.addActionListener(e -> {
                 switch (atividade) {
                     case "Banho":
-                        new telabanho().setVisible(true);
+                        new telabanho(usuarioId).setVisible(true);
                         this.dispose();
                         break;
                     case "Lavar Louça":
-                        new telalavarlouca().setVisible(true);
+                        new telalavarlouca(usuarioId).setVisible(true);
                         this.dispose();
                         break;
                     case "Escovar os Dentes":
-                        new telaescovardentes().setVisible(true);
+                        new telaescovardentes(usuarioId).setVisible(true);
                         break;
 
                     // outros casos botões
@@ -174,6 +180,10 @@ painelCentral.add(panelBotoes, BorderLayout.SOUTH);
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(telainicio::new);
+        
+    }
+
+    private void initComponents() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

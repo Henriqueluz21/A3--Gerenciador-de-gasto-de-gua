@@ -7,7 +7,12 @@ import java.awt.*;
 
 public class telagastos extends JFrame {
 
-    public telagastos() {
+    private int usuarioId;
+    
+    public telagastos(int usuarioId) {
+        
+        this.usuarioId = usuarioId;
+        
         setTitle("AquaLerta - Gastos Médios");
         setSize(900, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,11 +68,11 @@ public class telagastos extends JFrame {
                         dispose();
                         break;
                     case "Perfil":
-                        new telaperfil("Usuário Exemplo", "email@exemplo.com", 123.45).setVisible(true);
+                        new telaperfil("Usuário Exemplo", "email@exemplo.com", 123.45, usuarioId).setVisible(true);
                         dispose();
                         break;
                     case "Início":
-                        new telainicio().setVisible(true);
+                        new telainicio(usuarioId).setVisible(true);
                         dispose();
                         break;
                 }
@@ -145,6 +150,6 @@ public class telagastos extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(telagastos::new);
+        
     }
 }

@@ -5,7 +5,10 @@ import java.awt.*;
 
 public class telalavarlouca extends JFrame {
 
-    public telalavarlouca() {
+    private int usuarioId;
+    public telalavarlouca(int usuarioId) {
+        
+        this.usuarioId = usuarioId;
         setTitle("AquaLerta - Lava-louça");
         setSize(900, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -53,11 +56,11 @@ public class telalavarlouca extends JFrame {
             btn.addActionListener(e -> {
                 switch (opcao) {
                     case "Início":
-                        new telainicio().setVisible(true);
+                        new telainicio(usuarioId).setVisible(true);
                         this.dispose();
                         break;
                     case "Gastos":
-                        new telagastos().setVisible(true);
+                        new telagastos(usuarioId).setVisible(true);
                         this.dispose();
                         break;
                     case "Dicas":
@@ -66,7 +69,7 @@ public class telalavarlouca extends JFrame {
                         this.dispose();
                         break;
                     case "Perfil":
-                        new telaperfil("Usuário Exemplo", "email@exemplo.com", 123.45).setVisible(true);
+                        new telaperfil("Usuário Exemplo", "email@exemplo.com", 123.45, usuarioId).setVisible(true);
                         this.dispose();
                         break;
                 }
@@ -155,6 +158,6 @@ public class telalavarlouca extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(telalavarlouca::new);
+        
     }
 }

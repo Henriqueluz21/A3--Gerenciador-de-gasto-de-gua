@@ -14,6 +14,8 @@ import javax.swing.JOptionPane;
  */
 public class logintela extends javax.swing.JFrame {
 
+    
+    
     public logintela() {
         initComponents();
     }
@@ -111,6 +113,7 @@ public class logintela extends javax.swing.JFrame {
         String login = loginTextField.getText(); // login
         String senha = new String(senhaPasswordField.getPassword());// senha
         
+        
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost/gerenciadorAgua", "root", "Penelope_11");
@@ -120,10 +123,15 @@ public class logintela extends javax.swing.JFrame {
             stmt.setString(1, login);
             stmt.setString(2, senha);
 
-             ResultSet rs = stmt.executeQuery();
-
+            ResultSet rs = stmt.executeQuery();
+           
+             
             if (rs.next()) {
+                int usuarioId = rs.getInt("Id");
                 JOptionPane.showMessageDialog(null, "Login realizado com sucesso!");
+                new telainicio(usuarioId).setVisible(true);
+                // Fecha a tela de login
+                this.dispose(); 
             } else {
                 JOptionPane.showMessageDialog(null, "Login ou senha inválidos!");
             }
