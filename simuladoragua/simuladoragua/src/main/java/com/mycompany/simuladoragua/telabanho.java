@@ -13,13 +13,10 @@ public class telabanho extends JFrame {
     
     private int usuarioId;
 
+    
     public telabanho(int usuarioId) {
+        
         this.usuarioId = usuarioId;
-    
-    }
-
-    
-    public telabanho() {
         
         setTitle("AquaLerta - Banho");
         setSize(900, 600);
@@ -221,6 +218,7 @@ public class telabanho extends JFrame {
    
  
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(telabanho::new);
+        
     }
+    
 }
