@@ -14,9 +14,9 @@ public class telaperfil extends JFrame {
     
     String nomeUsuario = "";
     String emailUsuario = "";
-    double consumoAguaTotal = 0;
+    int consumoAguaTotal = 0;
     
-    public telaperfil(String nomeUsuario, String emailUsuario, double consumoAguaTotal, int usuarioId) throws SQLException, ClassNotFoundException {
+    public telaperfil(String nomeUsuario, String emailUsuario, int consumoAguaTotal, int usuarioId) throws SQLException, ClassNotFoundException {
         
         this.usuarioId = usuarioId;
         
@@ -25,10 +25,14 @@ public class telaperfil extends JFrame {
             Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost/gerenciadorAgua", "root", "Penelope_11");
             
             String sql = "SELECT nome, email FROM usuario where id = ?";
+            String sql2 = "SELECT banhoDia FROM consumoChuveiro where id = ?";
             PreparedStatement stmt = conexao.prepareStatement(sql);
+            PreparedStatement stmt2 = conexao.prepareStatement(sql2);
             stmt.setInt(1,usuarioId);
+            stmt2.setInt(1, usuarioId);
             
             ResultSet rs = stmt.executeQuery();
+            ResultSet rs2 = stmt2.executeQuery();
             
             if (rs.next()){
                 nomeUsuario = rs.getString("nome");
@@ -39,8 +43,14 @@ public class telaperfil extends JFrame {
                 return;
             }
             
+            if (rs2.next()){
+                consumoAguaTotal = rs2.getInt("banhoDia");
+            }
+            
             rs.close();
+            rs2.close();
             stmt.close();
+            stmt2.close();
             conexao.close();
             
         }catch(ClassNotFoundException ex){

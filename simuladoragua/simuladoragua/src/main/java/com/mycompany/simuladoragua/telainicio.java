@@ -10,7 +10,7 @@ import java.util.logging.Logger;
 public class telainicio extends JFrame {
 
     private int usuarioId;
-    
+    private int consumoAguaTotal;
 
     public telainicio(int usuarioId) {
 
@@ -90,7 +90,7 @@ for (String opcao : opcoesMenu) {
             case "Perfil":
             {
                 try {
-                    new telaperfil("Usuário Exemplo", "email@exemplo.com", 123.45, usuarioId).setVisible(true);
+                    new telaperfil("Usuário Exemplo", "email@exemplo.com", consumoAguaTotal , usuarioId).setVisible(true);
                 } catch (SQLException ex) {
                     Logger.getLogger(telainicio.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (ClassNotFoundException ex) {

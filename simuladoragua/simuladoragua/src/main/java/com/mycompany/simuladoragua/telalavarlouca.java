@@ -74,7 +74,7 @@ public class telalavarlouca extends JFrame {
                     case "Perfil":
                     {
                         try {
-                            new telaperfil("Usuário Exemplo", "email@exemplo.com", 123.45, usuarioId).setVisible(true);
+                            new telaperfil("Usuário Exemplo", "email@exemplo.com", 123, usuarioId).setVisible(true);
                         } catch (SQLException ex) {
                             Logger.getLogger(telalavarlouca.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (ClassNotFoundException ex) {

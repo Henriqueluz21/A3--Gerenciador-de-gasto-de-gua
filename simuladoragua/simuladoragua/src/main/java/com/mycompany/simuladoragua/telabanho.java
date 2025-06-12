@@ -14,7 +14,7 @@ public class telabanho extends JFrame {
     public int consumoMin = 0;
     
     private int usuarioId;
-
+    private int consumoAguaTotal;
     
     public telabanho(int usuarioId) {
         
@@ -86,7 +86,7 @@ public class telabanho extends JFrame {
                     case "Perfil":
                     {
                         try {
-                            new telaperfil("Usuário Exemplo", "email@exemplo.com", 123.45, usuarioId).setVisible(true);
+                            new telaperfil("Usuário Exemplo", "email@exemplo.com", consumoAguaTotal , usuarioId).setVisible(true);
                         } catch (SQLException ex) {
                             Logger.getLogger(telabanho.class.getName()).log(Level.SEVERE, null, ex);
                         } catch (ClassNotFoundException ex) {
