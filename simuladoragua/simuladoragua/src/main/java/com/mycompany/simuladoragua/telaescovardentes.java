@@ -2,6 +2,9 @@ package com.mycompany.simuladoragua;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class telaescovardentes extends JFrame {
 
@@ -68,9 +71,18 @@ public class telaescovardentes extends JFrame {
                         this.dispose();
                         break;
                     case "Perfil":
-                        new telaperfil("Usuário Exemplo", "email@exemplo.com", 123.45, usuarioId).setVisible(true);
+                    {
+                        try {
+                            new telaperfil("Usuário Exemplo", "email@exemplo.com", 123.45, usuarioId).setVisible(true);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(telaescovardentes.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(telaescovardentes.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
                         this.dispose();
                         break;
+
                     case "Início":
                         new telainicio(usuarioId).setVisible(true);
                         this.dispose();

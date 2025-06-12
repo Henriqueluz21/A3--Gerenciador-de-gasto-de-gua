@@ -2,14 +2,55 @@ package com.mycompany.simuladoragua;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class telaperfil extends JFrame {
 
     private int usuarioId;
     
-    public telaperfil(String nomeUsuario, String emailUsuario, double consumoAguaTotal, int usuarioId) {
+    String nomeUsuario = "";
+    String emailUsuario = "";
+    double consumoAguaTotal = 0;
+    
+    public telaperfil(String nomeUsuario, String emailUsuario, double consumoAguaTotal, int usuarioId) throws SQLException, ClassNotFoundException {
         
         this.usuarioId = usuarioId;
+        
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conexao = DriverManager.getConnection("jdbc:mysql://localhost/gerenciadorAgua", "root", "Penelope_11");
+            
+            String sql = "SELECT nome, email FROM usuario where id = ?";
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            stmt.setInt(1,usuarioId);
+            
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()){
+                nomeUsuario = rs.getString("nome");
+                emailUsuario = rs.getString("email");
+            }else{
+                JOptionPane.showMessageDialog(null, "Usuario não encontro.");
+                dispose();
+                return;
+            }
+            
+            rs.close();
+            stmt.close();
+            conexao.close();
+            
+        }catch(ClassNotFoundException ex){
+            JOptionPane.showMessageDialog(null, "Usuario não encontro." + ex.getMessage());
+            dispose();
+            return;
+        }
+        
+       
+ 
         setTitle("AquaLerta - Perfil");
         setSize(900, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -129,4 +170,6 @@ for (String opcao : opcoesMenu) {
     public static void main(String[] args) {
         
     }
+
+    
 }

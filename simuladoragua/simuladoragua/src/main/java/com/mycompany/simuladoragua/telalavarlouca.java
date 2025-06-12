@@ -2,6 +2,9 @@ package com.mycompany.simuladoragua;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class telalavarlouca extends JFrame {
 
@@ -69,9 +72,18 @@ public class telalavarlouca extends JFrame {
                         this.dispose();
                         break;
                     case "Perfil":
-                        new telaperfil("Usuário Exemplo", "email@exemplo.com", 123.45, usuarioId).setVisible(true);
+                    {
+                        try {
+                            new telaperfil("Usuário Exemplo", "email@exemplo.com", 123.45, usuarioId).setVisible(true);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(telalavarlouca.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(telalavarlouca.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
                         this.dispose();
                         break;
+
                 }
             });
 

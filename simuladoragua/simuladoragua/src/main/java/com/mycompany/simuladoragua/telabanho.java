@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class telabanho extends JFrame {
     private int contador = 0;
@@ -82,9 +84,18 @@ public class telabanho extends JFrame {
                         this.dispose();
                         break;
                     case "Perfil":
-                        new telaperfil("Usuário Exemplo", "email@exemplo.com", 123.45, usuarioId).setVisible(true);
+                    {
+                        try {
+                            new telaperfil("Usuário Exemplo", "email@exemplo.com", 123.45, usuarioId).setVisible(true);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(telabanho.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(telabanho.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
                         this.dispose();
                         break;
+
                 }
             });
 

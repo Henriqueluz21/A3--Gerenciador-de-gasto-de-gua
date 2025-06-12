@@ -4,6 +4,9 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class telagastos extends JFrame {
 
@@ -68,9 +71,18 @@ public class telagastos extends JFrame {
                         dispose();
                         break;
                     case "Perfil":
-                        new telaperfil("Usuário Exemplo", "email@exemplo.com", 123.45, usuarioId).setVisible(true);
+                    {
+                        try {
+                            new telaperfil("Usuário Exemplo", "email@exemplo.com", 123.45, usuarioId).setVisible(true);
+                        } catch (SQLException ex) {
+                            Logger.getLogger(telagastos.class.getName()).log(Level.SEVERE, null, ex);
+                        } catch (ClassNotFoundException ex) {
+                            Logger.getLogger(telagastos.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
                         dispose();
                         break;
+
                     case "Início":
                         new telainicio(usuarioId).setVisible(true);
                         dispose();
